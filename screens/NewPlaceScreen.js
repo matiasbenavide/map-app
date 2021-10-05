@@ -4,21 +4,27 @@ import { View, Text, Button, TextInput, ScrollView, StyleSheet } from 'react-nat
 import { COLORS } from '../constants';
 import { addPlace } from '../store/places.actions';
 import ImageSelector from '../components/ImageSelector';
+import LocationSelector from '../components/LocationSelector';
 
 const NewPlaceScreen = ({ navigation }) => {
     const dispatch = useDispatch()
     const [title, setTitle] = useState('');
     const [image, setImage] = useState();
+    const [location, setLocation] = useState();
 
     const handleTitleChange = text => setTitle(text)
     
     const handleSave = () => {
-        dispatch(addPlace(title, image))
+        dispatch(addPlace(title, image, location))
         navigation.navigate('Direcciones')
     }
 
     const handlePickImage = (uri) => {
         setImage(uri);
+    }
+
+    const handlePickLocation = (loc) => {
+        setLocation(loc);
     }
 
     return (
@@ -32,6 +38,8 @@ const NewPlaceScreen = ({ navigation }) => {
                 />
 
                 <ImageSelector onImage={handlePickImage} />
+
+                <LocationSelector onLocation={handlePickLocation} />
                 
                 <Button
                     title="Grabar Dirección"
